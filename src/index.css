@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Merriweather", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  
+  --color-sage-50: #f4f7f5;
+  --color-sage-100: #e3ebe5;
+  --color-sage-200: #c5d8cc;
+  --color-sage-300: #9ebfb0;
+  --color-sage-400: #76a18e;
+  --color-sage-500: #558571;
+  --color-sage-600: #426a5a;
+  --color-sage-700: #365549;
+  --color-sage-800: #2d453c;
+  --color-sage-900: #263a33;
+  
+  --color-sand-50: #fbfaf8;
+  --color-sand-100: #f5f2eb;
+  --color-sand-200: #ebe4d5;
+  --color-sand-300: #decba6;
+  --color-sand-400: #d0b07e;
+  --color-sand-500: #c2965b;
+  --color-sand-600: #a67946;
+  --color-sand-700: #855e39;
+  --color-sand-800: #6e4d34;
+  --color-sand-900: #5a402e;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-sand-50);
+  color: var(--color-sage-900);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+}
