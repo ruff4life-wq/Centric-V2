@@ -171,25 +171,25 @@ export default function ModuleView() {
               <div className="w-14 h-14 bg-sand-100 rounded-full flex items-center justify-center mx-auto">
                 <PenTool className="text-sand-600" size={24} />
               </div>
-              <h3 className="text-xl font-serif text-sage-900">Before you move on...</h3>
+              <h3 className="text-xl font-serif text-sage-900">One small invitation</h3>
               <p className="text-sage-600 text-sm leading-relaxed">
-                You haven't written anything in your reflections yet — and this is where the real work happens. Even a sentence or two makes a difference.
+                Your reflection questions are still blank — and that's completely okay. But even one sentence, written honestly, has a way of making the week stick.
               </p>
-              <p className="text-sage-500 text-xs italic">
-                "The unexamined life is not worth living." — and the unexamined week loses its fruit.
+              <p className="text-sage-500 text-xs italic font-serif">
+                "You don't have to write much. You just have to write true."
               </p>
               <div className="space-y-3 pt-2">
                 <button
                   onClick={() => setShowReflectionGate(false)}
                   className="w-full bg-sage-700 text-white py-3 rounded-xl font-serif hover:bg-sage-800 transition-colors"
                 >
-                  Give me a few more minutes
+                  Let me write something
                 </button>
                 <button
                   onClick={handleCompleteAnyway}
-                  className="w-full py-3 rounded-xl border border-sage-200 text-sage-500 text-sm hover:bg-sage-50 transition-colors"
+                  className="w-full py-3 rounded-xl border border-sage-200 text-sage-400 text-sm hover:bg-sage-50 transition-colors"
                 >
-                  Continue without reflecting
+                  Continue as is
                 </button>
               </div>
             </div>
