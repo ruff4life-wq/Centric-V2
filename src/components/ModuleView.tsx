@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { curriculum } from '../data/curriculum';
 import { useUser } from '../context/UserContext';
-import { motion } from 'motion/react';
-import { CheckCircle, ArrowLeft, BookOpen, PenTool, Heart, Save } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { CheckCircle, ArrowLeft, BookOpen, PenTool, Heart, Save, Sparkles, RefreshCw } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function ModuleView() {
@@ -17,6 +17,7 @@ export default function ModuleView() {
   const [answers, setAnswers] = useState<string[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [cycleComplete, setCycleComplete] = useState(false);
 
   // Load existing answers
   useEffect(() => {
@@ -54,9 +55,91 @@ export default function ModuleView() {
 
   const handleComplete = () => {
     handleSave();
-    completeWeek(weekId);
+    if (weekId === 6) {
+      setCycleComplete(true);
+    } else {
+      completeWeek(weekId);
+      navigate('/dashboard');
+    }
+  };
+
+  const handleStartNextCycle = () => {
+    completeWeek(weekId); // triggers cycle increment in context
     navigate('/dashboard');
   };
+
+  // Cycle Complete Screen — shown after completing Week 6
+  if (cycleComplete) {
+    const completedCycle = state.cycle || 1;
+    const nextCycle = completedCycle + 1;
+    return (
+      <div className="min-h-screen bg-sage-50 flex items-center justify-center p-6">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="max-w-lg w-full bg-white rounded-3xl shadow-2xl p-10 border border-sage-100 text-center space-y-8"
+        >
+          {/* Icon burst */}
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+            className="w-24 h-24 bg-sage-600 rounded-full flex items-center justify-center mx-auto shadow-lg"
+          >
+            <Sparkles className="text-white" size={44} />
+          </motion.div>
+
+          {/* Headline */}
+          <div className="space-y-2">
+            <p className="text-xs font-bold tracking-widest text-sage-500 uppercase">
+              Cycle {completedCycle} Complete
+            </p>
+            <h1 className="text-3xl font-serif text-sage-900 leading-tight">
+              You did the work.
+            </h1>
+            <p className="text-sage-600 leading-relaxed">
+              Six weeks. Six pillars. One intentional step at a time. This is what restoration looks like — and you showed up for it.
+            </p>
+          </div>
+
+          {/* Divider */}
+          <hr className="border-sage-100" />
+
+          {/* Reflection prompt */}
+          <div className="bg-sand-50 rounded-2xl p-6 border border-sand-100 text-left space-y-3">
+            <p className="text-sm font-semibold text-sand-800 flex items-center gap-2">
+              <PenTool size={15} className="text-sand-500" />
+              Before you begin Cycle {nextCycle}, take a moment:
+            </p>
+            <p className="text-sm text-sand-700 italic leading-relaxed">
+              "What has shifted in me over these six weeks? Where do I feel most renewed — and where do I still want to grow?"
+            </p>
+          </div>
+
+          {/* What's next note */}
+          <div className="flex items-start gap-3 text-left bg-sage-50 rounded-xl p-4 border border-sage-100">
+            <RefreshCw size={18} className="text-sage-500 mt-0.5 flex-shrink-0" />
+            <p className="text-sm text-sage-700">
+              <strong>Cycle {nextCycle}</strong> begins at Physical Health — but you're not starting over. You're going deeper. Each cycle is a chance to see the same pillars through new eyes.
+            </p>
+          </div>
+
+          {/* CTA */}
+          <button
+            onClick={handleStartNextCycle}
+            className="w-full bg-sage-700 text-white py-4 rounded-2xl font-semibold text-base hover:bg-sage-800 transition-colors shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+          >
+            Begin Cycle {nextCycle} <RefreshCw size={18} />
+          </button>
+
+          <p className="text-xs text-sage-400">
+            Your journal and progress history are always accessible in your Profile.
+          </p>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-3xl mx-auto pb-20 space-y-8">

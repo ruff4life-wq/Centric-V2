@@ -73,15 +73,21 @@ export default function Assessment() {
         {step === 1 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-serif text-sage-900 mb-4">The Wheel of Life</h2>
-            <p className="text-sm text-sage-600 mb-6">
-              Rate your current satisfaction in these areas (1-10). Be honest—this is a no-judgment zone.
+            <p className="text-sm text-sage-600 mb-1">
+              Rate your current satisfaction in each area from <strong>1 to 10</strong>.
             </p>
-            <div className="space-y-4">
+            <div className="flex justify-between text-xs text-sage-400 mb-4 px-0.5">
+              <span>1 = Very unsatisfied / major struggle</span>
+              <span>10 = Thriving / fully satisfied</span>
+            </div>
+            <div className="space-y-5">
               {Object.entries(wheel).map(([key, value]) => (
-                <div key={key} className="space-y-2">
+                <div key={key} className="space-y-1.5">
                   <div className="flex justify-between text-sm font-medium text-sage-800">
                     <span>{key}</span>
-                    <span>{value}/10</span>
+                    <span className={`font-bold ${value <= 3 ? 'text-red-400' : value <= 6 ? 'text-amber-500' : 'text-sage-600'}`}>
+                      {value}/10
+                    </span>
                   </div>
                   <input
                     type="range"
@@ -91,6 +97,11 @@ export default function Assessment() {
                     onChange={(e) => setWheel(prev => ({ ...prev, [key]: parseInt(e.target.value) }))}
                     className="w-full accent-sage-600 h-2 bg-sage-100 rounded-lg appearance-none cursor-pointer"
                   />
+                  <div className="flex justify-between text-xs text-sage-300 px-0.5">
+                    <span>1</span>
+                    <span>5</span>
+                    <span>10</span>
+                  </div>
                 </div>
               ))}
             </div>
@@ -106,65 +117,41 @@ export default function Assessment() {
         {step === 2 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-serif text-sage-900">Professional Quality of Life</h2>
-            <p className="text-sm text-sage-600">
+            <p className="text-sm text-sage-600 mb-1">
               As a helping professional, it's vital to check your own tank.
             </p>
+            <div className="bg-sage-50 border border-sage-100 rounded-xl px-4 py-3 text-xs text-sage-600 flex justify-between">
+              <span><strong>1</strong> = Never / Not at all</span>
+              <span><strong>3</strong> = Sometimes</span>
+              <span><strong>5</strong> = Very Often / Always</span>
+            </div>
             
             <div className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-sage-800">
-                  I get satisfaction from being able to help people.
-                </label>
-                <div className="flex gap-2">
-                  {[1, 2, 3, 4, 5].map((v) => (
-                    <button
-                      key={v}
-                      onClick={() => setProQOL(p => ({ ...p, compassion: v }))}
-                      className={`flex-1 py-2 rounded-lg border ${proQOL.compassion === v ? 'bg-sage-600 text-white border-sage-600' : 'border-sage-200 hover:bg-sage-50'}`}
-                    >
-                      {v}
-                    </button>
-                  ))}
+              {[
+                { key: 'compassion' as const, label: 'I get satisfaction from being able to help people.' },
+                { key: 'burnout' as const, label: 'I feel worn out because of my work as a helper.' },
+                { key: 'trauma' as const, label: 'I feel overwhelmed by the trauma of those I help.' },
+              ].map(({ key, label }) => (
+                <div key={key} className="space-y-2">
+                  <label className="text-sm font-medium text-sage-800">{label}</label>
+                  <div className="flex gap-2">
+                    {[1, 2, 3, 4, 5].map((v) => (
+                      <button
+                        key={v}
+                        onClick={() => setProQOL(p => ({ ...p, [key]: v }))}
+                        className={`flex-1 py-2 rounded-lg border text-sm font-medium transition-colors ${proQOL[key] === v ? 'bg-sage-600 text-white border-sage-600' : 'border-sage-200 hover:bg-sage-50 text-sage-700'}`}
+                      >
+                        {v}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="flex justify-between text-xs text-sage-400 px-0.5">
+                    <span>Never</span>
+                    <span>Sometimes</span>
+                    <span>Very Often</span>
+                  </div>
                 </div>
-                <div className="flex justify-between text-xs text-sage-400">
-                  <span>Never</span>
-                  <span>Very Often</span>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-sage-800">
-                  I feel worn out because of my work as a helper.
-                </label>
-                <div className="flex gap-2">
-                  {[1, 2, 3, 4, 5].map((v) => (
-                    <button
-                      key={v}
-                      onClick={() => setProQOL(p => ({ ...p, burnout: v }))}
-                      className={`flex-1 py-2 rounded-lg border ${proQOL.burnout === v ? 'bg-sage-600 text-white border-sage-600' : 'border-sage-200 hover:bg-sage-50'}`}
-                    >
-                      {v}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-sage-800">
-                  I feel overwhelmed by the trauma of those I help.
-                </label>
-                <div className="flex gap-2">
-                  {[1, 2, 3, 4, 5].map((v) => (
-                    <button
-                      key={v}
-                      onClick={() => setProQOL(p => ({ ...p, trauma: v }))}
-                      className={`flex-1 py-2 rounded-lg border ${proQOL.trauma === v ? 'bg-sage-600 text-white border-sage-600' : 'border-sage-200 hover:bg-sage-50'}`}
-                    >
-                      {v}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
 
             <button
