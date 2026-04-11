@@ -24,7 +24,7 @@ function getRange(score: number): { label: string; color: string } {
 
 function WheelChart({ wheel }: { wheel: Record<string, number> }) {
   const entries = Object.entries(wheel);
-  const cx = 160, cy = 160, maxR = 100;
+  const cx = 160, cy = 130, maxR = 100;
 
   const points = entries.map((_, i) => {
     const angle = (i / entries.length) * 2 * Math.PI - Math.PI / 2;
@@ -45,8 +45,11 @@ function WheelChart({ wheel }: { wheel: Record<string, number> }) {
   const polygonPath = spokePoints.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ') + ' Z';
   const outerPath = outerPoints.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ') + ' Z';
 
+  // labelR close to chart, viewBox expanded with negative origin to fit left labels
+  const labelR = maxR + 16;
+
   return (
-    <svg viewBox="0 0 320 320" className="w-full max-w-sm mx-auto">
+    <svg viewBox="-55 10 430 260" className="w-full mx-auto">
       {[2, 4, 6, 8, 10].map(ring => (
         <polygon
           key={ring}
@@ -68,13 +71,22 @@ function WheelChart({ wheel }: { wheel: Record<string, number> }) {
       {outerPoints.map((p, i) => {
         const [key] = entries[i];
         const angle = points[i].angle;
-        const labelR = maxR + 38;
         const lx = cx + labelR * Math.cos(angle);
         const ly = cy + labelR * Math.sin(angle);
-        const anchor = Math.cos(angle) > 0.15 ? 'start' : Math.cos(angle) < -0.15 ? 'end' : 'middle';
+        const cosA = Math.cos(angle);
+        const anchor = cosA > 0.15 ? 'start' : cosA < -0.15 ? 'end' : 'middle';
         const short = key.replace('/Emotional', '').replace(' Health', '').replace('Career/Work', 'Career');
         return (
-          <text key={i} x={lx} y={ly + 5} textAnchor={anchor} fontSize="13" fill="#6b5a4e" fontFamily="Georgia, serif" fontWeight="500">
+          <text
+            key={i}
+            x={lx}
+            y={ly + 5}
+            textAnchor={anchor}
+            fontSize="13"
+            fill="#6b5a4e"
+            fontFamily="Georgia, serif"
+            fontWeight="500"
+          >
             {short}
           </text>
         );
@@ -291,7 +303,7 @@ export default function Dashboard() {
                   {isCompleted && <CheckCircle className="text-emerald-500" size={16} />}
                   {isLocked && <Lock className="text-gray-300" size={16} />}
                   {isCurrent && (
-                    <span className="text-xs font-bold text-[#c0736a] uppercase tracking-wider">Current</span>
+                    <span className="text-[10px] font-bold text-[#c0736a] uppercase tracking-wider">Current</span>
                   )}
                 </div>
                 <h4 className="font-serif font-medium text-gray-900 text-sm mb-0.5">{week.title}</h4>

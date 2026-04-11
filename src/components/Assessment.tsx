@@ -33,7 +33,8 @@ function getRange(score: number): { label: string; color: string; description: s
 
 function WheelChart({ wheel }: { wheel: Record<string, number> }) {
   const entries = Object.entries(wheel);
-  const cx = 170, cy = 170, maxR = 110;
+  const cx = 160, cy = 140, maxR = 110;
+  const labelR = maxR + 16;
 
   const points = entries.map((_, i) => {
     const angle = (i / entries.length) * 2 * Math.PI - Math.PI / 2;
@@ -58,7 +59,7 @@ function WheelChart({ wheel }: { wheel: Record<string, number> }) {
   const outerPath = outerPoints.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ') + ' Z';
 
   return (
-    <svg viewBox="0 0 340 340" className="w-full max-w-sm mx-auto">
+    <svg viewBox="-60 10 440 280" className="w-full mx-auto">
       {/* Grid rings */}
       {[2, 4, 6, 8, 10].map(ring => (
         <polygon
@@ -93,16 +94,16 @@ function WheelChart({ wheel }: { wheel: Record<string, number> }) {
       {outerPoints.map((p, i) => {
         const [key] = entries[i];
         const angle = points[i].angle;
-        const labelR = maxR + 40;
         const lx = cx + labelR * Math.cos(angle);
         const ly = cy + labelR * Math.sin(angle);
-        const anchor = Math.cos(angle) > 0.1 ? 'start' : Math.cos(angle) < -0.1 ? 'end' : 'middle';
+        const cosA = Math.cos(angle);
+        const anchor = cosA > 0.1 ? 'start' : cosA < -0.1 ? 'end' : 'middle';
         const shortLabel = key.replace('/Emotional', '').replace(' Health', '').replace('Career/Work', 'Career');
         return (
           <text
             key={i}
             x={lx}
-            y={ly + 4}
+            y={ly + 5}
             textAnchor={anchor}
             fontSize="13"
             fill="#6b5a4e"
@@ -115,7 +116,7 @@ function WheelChart({ wheel }: { wheel: Record<string, number> }) {
       })}
 
       {/* Center label */}
-      <text x={cx} y={cy + 4} textAnchor="middle" fontSize="10" fill="#9a7a6a" fontFamily="Georgia, serif">
+      <text x={cx} y={cy + 5} textAnchor="middle" fontSize="11" fill="#9a7a6a" fontFamily="Georgia, serif">
         Wheel of Life
       </text>
     </svg>
@@ -360,7 +361,7 @@ export default function Assessment() {
                         <span className="flex items-center gap-2">
                           {key}
                           {!isTouched && (
-                            <span className="text-xs text-amber-400 font-normal">
+                            <span className="text-[10px] text-amber-400 font-normal">
                               move slider
                             </span>
                           )}
