@@ -146,21 +146,27 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     }));
   };
 
-  // Returns true if 5+ days have passed since week started
+  // Returns true if 4+ calendar days have passed since week started
+  // Uses calendar date diff so Monday start = completable Friday+
   const canCompleteWeek = (): boolean => {
-    if (!state.weekStartedAt) return true; // no timer set yet — allow for legacy users
+    if (!state.weekStartedAt) return true;
     const started = new Date(state.weekStartedAt);
     const now = new Date();
-    const diffDays = Math.floor((now.getTime() - started.getTime()) / (1000 * 60 * 60 * 24));
-    return diffDays >= 5;
+    // Compare calendar dates, not 24hr blocks
+    const startDate = new Date(started.getFullYear(), started.getMonth(), started.getDate());
+    const nowDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const diffDays = Math.floor((nowDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+    return diffDays >= 4; // day 1 = 0 diff, day 5 = 4 diff
   };
 
   // How many days into the current week (1-7)
   const daysIntoWeek = (): number => {
-    if (!state.weekStartedAt) return 7; // legacy — treat as full week
+    if (!state.weekStartedAt) return 7;
     const started = new Date(state.weekStartedAt);
     const now = new Date();
-    const diff = Math.floor((now.getTime() - started.getTime()) / (1000 * 60 * 60 * 24));
+    const startDate = new Date(started.getFullYear(), started.getMonth(), started.getDate());
+    const nowDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const diff = Math.floor((nowDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
     return Math.min(diff + 1, 7);
   };
 

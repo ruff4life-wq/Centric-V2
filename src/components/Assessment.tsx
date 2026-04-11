@@ -36,7 +36,7 @@ export default function Assessment() {
         },
         completed: true
       });
-      navigate('/dashboard');
+      navigate('/today');
     }
   };
 

@@ -67,7 +67,7 @@ export default function ModuleView() {
       setCycleComplete(true);
     } else {
       completeWeek(weekId);
-      navigate('/dashboard');
+      navigate('/today');
     }
   };
 
@@ -78,13 +78,13 @@ export default function ModuleView() {
       setCycleComplete(true);
     } else {
       completeWeek(weekId);
-      navigate('/dashboard');
+      navigate('/today');
     }
   };
 
   const handleStartNextCycle = () => {
     completeWeek(weekId); // triggers cycle increment in context
-    navigate('/dashboard');
+    navigate('/today');
   };
 
   // Cycle Complete Screen — shown after completing Week 6
@@ -197,10 +197,10 @@ export default function ModuleView() {
         </div>
       )}
       <button 
-        onClick={() => navigate('/dashboard')}
+        onClick={() => navigate('/today')}
         className="flex items-center gap-2 text-sage-600 hover:text-sage-800 transition-colors mb-4"
       >
-        <ArrowLeft size={18} /> Back to Dashboard
+        <ArrowLeft size={18} /> Back to Today
       </button>
 
       <header className="space-y-4">
