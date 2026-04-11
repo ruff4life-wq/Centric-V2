@@ -11,7 +11,6 @@ export default function ModuleView() {
   const { completeWeek, saveJournalEntry, state } = useUser();
   
   const weekId = parseInt(id || '1');
-  const { state } = useUser();
   const cycleWeeks = getCycleWeeks(state.cycle || 1);
   const content = cycleWeeks.find(c => c.id === weekId);
   
