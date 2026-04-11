@@ -7,6 +7,13 @@ export interface Message {
   timestamp: string; // ISO string for storage
 }
 
+interface AssessmentSnapshot {
+  date: string;
+  cycle: number;
+  week: number;
+  wheelOfLife: Record<string, number>;
+}
+
 interface AssessmentData {
   wheelOfLife: Record<string, number>;
   proQOL: {
@@ -25,9 +32,10 @@ interface UserState {
   journalEntries: Record<number, string>;
   chatHistory: Message[];
   cycle: number;
-  weekStartedAt: string | null;   // ISO timestamp — when current week began
-  lastCheckInDate: string | null; // ISO date string — last daily check-in
-  checkInHistory: Record<string, string>; // date -> feeling key
+  weekStartedAt: string | null;
+  lastCheckInDate: string | null;
+  checkInHistory: Record<string, string>;
+  assessmentHistory: AssessmentSnapshot[];
 }
 
 interface UserContextType {
@@ -69,6 +77,7 @@ const defaultState: UserState = {
   weekStartedAt: null,
   lastCheckInDate: null,
   checkInHistory: {},
+  assessmentHistory: [],
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -89,6 +98,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
           weekStartedAt: parsed.weekStartedAt || defaultState.weekStartedAt,
           lastCheckInDate: parsed.lastCheckInDate || defaultState.lastCheckInDate,
           checkInHistory: parsed.checkInHistory || defaultState.checkInHistory,
+          assessmentHistory: parsed.assessmentHistory || defaultState.assessmentHistory,
         };
       } catch (e) {
         console.error('Failed to parse saved state', e);
@@ -103,13 +113,25 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   }, [state]);
 
   const updateAssessment = (data: Partial<AssessmentData>) => {
-    setState(prev => ({
-      ...prev,
-      assessment: { ...prev.assessment, ...data },
-      weekStartedAt: data.completed && !prev.assessment.completed
-        ? new Date().toISOString()
-        : prev.weekStartedAt,
-    }));
+    setState(prev => {
+      const snapshot: AssessmentSnapshot | null = data.wheelOfLife ? {
+        date: new Date().toISOString(),
+        cycle: prev.cycle || 1,
+        week: prev.currentWeek,
+        wheelOfLife: data.wheelOfLife,
+      } : null;
+
+      return {
+        ...prev,
+        assessment: { ...prev.assessment, ...data },
+        weekStartedAt: data.completed && !prev.assessment.completed
+          ? new Date().toISOString()
+          : prev.weekStartedAt,
+        assessmentHistory: snapshot
+          ? [...prev.assessmentHistory, snapshot]
+          : prev.assessmentHistory,
+      };
+    });
   };
 
   const completeWeek = (weekId: number) => {

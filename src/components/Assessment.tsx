@@ -149,20 +149,22 @@ export default function Assessment() {
     } else if (step === 1 && allWheelTouched) {
       setStep(2);
     } else if (step === 2) {
-      updateAssessment({
-        wheelOfLife: wheel,
-        proQOL: {
-          compassionSatisfaction: proQOL.compassion,
-          burnout: proQOL.burnout,
-          secondaryTraumaticStress: proQOL.trauma,
-        },
-        completed: true,
-      });
+      // Show results FIRST — updateAssessment called on "Begin Week 1"
       setShowResults(true);
     }
   };
 
   const handleProceed = () => {
+    // Only now mark assessment complete — after user has seen results
+    updateAssessment({
+      wheelOfLife: wheel,
+      proQOL: {
+        compassionSatisfaction: proQOL.compassion,
+        burnout: proQOL.burnout,
+        secondaryTraumaticStress: proQOL.trauma,
+      },
+      completed: true,
+    });
     navigate('/today');
   };
 
