@@ -241,7 +241,7 @@ export default function Today() {
       >
         <div className="w-1 self-stretch bg-[#c0736a] rounded-full opacity-60 flex-shrink-0" />
         <div>
-          <p className="text-[10px] font-bold tracking-widest text-sage-400 uppercase mb-1.5">
+          <p className="text-xs font-bold tracking-widest text-sage-400 uppercase mb-1.5">
             Today's Intention
           </p>
           <p className="font-serif text-sage-800 text-base leading-relaxed">
@@ -335,7 +335,7 @@ export default function Today() {
               <div className="bg-white rounded-2xl border border-sage-100 p-5">
                 <p className="font-serif text-sage-800 text-sm leading-relaxed mb-4">{response.text}</p>
                 <div className="pl-4 border-l-2 border-[#c0736a]">
-                  <p className="text-[10px] font-bold tracking-widest text-[#c0736a] uppercase mb-1">Try this</p>
+                  <p className="text-xs font-bold tracking-widest text-[#c0736a] uppercase mb-1">Try this</p>
                   <p className="text-xs text-sage-700 italic leading-relaxed">{response.exercise}</p>
                 </div>
               </div>
@@ -379,7 +379,7 @@ export default function Today() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-bold tracking-widest text-sage-400 uppercase mb-1">This Week's Anchor</p>
+              <p className="text-xs font-bold tracking-widest text-sage-400 uppercase mb-1">This Week's Anchor</p>
               <p className="font-serif text-sage-900 text-base">Week {state.currentWeek}, {currentWeekContent.title}</p>
               <p className="text-xs text-sage-400 mt-0.5 italic">{currentWeekContent.pillar}</p>
             </div>

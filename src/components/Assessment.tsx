@@ -33,7 +33,7 @@ function getRange(score: number): { label: string; color: string; description: s
 
 function WheelChart({ wheel }: { wheel: Record<string, number> }) {
   const entries = Object.entries(wheel);
-  const cx = 140, cy = 140, maxR = 110;
+  const cx = 170, cy = 170, maxR = 110;
 
   const points = entries.map((_, i) => {
     const angle = (i / entries.length) * 2 * Math.PI - Math.PI / 2;
@@ -58,7 +58,7 @@ function WheelChart({ wheel }: { wheel: Record<string, number> }) {
   const outerPath = outerPoints.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ') + ' Z';
 
   return (
-    <svg viewBox="0 0 280 280" className="w-full max-w-xs mx-auto">
+    <svg viewBox="0 0 340 340" className="w-full max-w-sm mx-auto">
       {/* Grid rings */}
       {[2, 4, 6, 8, 10].map(ring => (
         <polygon
@@ -93,20 +93,21 @@ function WheelChart({ wheel }: { wheel: Record<string, number> }) {
       {outerPoints.map((p, i) => {
         const [key] = entries[i];
         const angle = points[i].angle;
-        const labelR = maxR + 22;
+        const labelR = maxR + 40;
         const lx = cx + labelR * Math.cos(angle);
         const ly = cy + labelR * Math.sin(angle);
         const anchor = Math.cos(angle) > 0.1 ? 'start' : Math.cos(angle) < -0.1 ? 'end' : 'middle';
-        const shortLabel = key.split('/')[0].replace(' Health', '').replace('Career', 'Career');
+        const shortLabel = key.replace('/Emotional', '').replace(' Health', '').replace('Career/Work', 'Career');
         return (
           <text
             key={i}
             x={lx}
             y={ly + 4}
             textAnchor={anchor}
-            fontSize="9"
+            fontSize="13"
             fill="#6b5a4e"
             fontFamily="Georgia, serif"
+            fontWeight="500"
           >
             {shortLabel}
           </text>
@@ -359,7 +360,7 @@ export default function Assessment() {
                         <span className="flex items-center gap-2">
                           {key}
                           {!isTouched && (
-                            <span className="text-[10px] text-amber-400 font-normal">
+                            <span className="text-xs text-amber-400 font-normal">
                               move slider
                             </span>
                           )}

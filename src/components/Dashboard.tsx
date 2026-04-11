@@ -24,7 +24,7 @@ function getRange(score: number): { label: string; color: string } {
 
 function WheelChart({ wheel }: { wheel: Record<string, number> }) {
   const entries = Object.entries(wheel);
-  const cx = 130, cy = 130, maxR = 100;
+  const cx = 160, cy = 160, maxR = 100;
 
   const points = entries.map((_, i) => {
     const angle = (i / entries.length) * 2 * Math.PI - Math.PI / 2;
@@ -46,7 +46,7 @@ function WheelChart({ wheel }: { wheel: Record<string, number> }) {
   const outerPath = outerPoints.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ') + ' Z';
 
   return (
-    <svg viewBox="0 0 260 260" className="w-full max-w-[220px] mx-auto">
+    <svg viewBox="0 0 320 320" className="w-full max-w-sm mx-auto">
       {[2, 4, 6, 8, 10].map(ring => (
         <polygon
           key={ring}
@@ -63,18 +63,18 @@ function WheelChart({ wheel }: { wheel: Record<string, number> }) {
       <path d={outerPath} fill="none" stroke="#d0c8be" strokeWidth="1" />
       <path d={polygonPath} fill="#c0736a" fillOpacity="0.2" stroke="#c0736a" strokeWidth="2" strokeLinejoin="round" />
       {spokePoints.map((p, i) => (
-        <circle key={i} cx={p.x} cy={p.y} r="3.5" fill="#c0736a" />
+        <circle key={i} cx={p.x} cy={p.y} r="4" fill="#c0736a" />
       ))}
       {outerPoints.map((p, i) => {
         const [key] = entries[i];
         const angle = points[i].angle;
-        const labelR = maxR + 20;
+        const labelR = maxR + 38;
         const lx = cx + labelR * Math.cos(angle);
         const ly = cy + labelR * Math.sin(angle);
         const anchor = Math.cos(angle) > 0.15 ? 'start' : Math.cos(angle) < -0.15 ? 'end' : 'middle';
-        const short = key.split('/')[0].replace(' Health', '');
+        const short = key.replace('/Emotional', '').replace(' Health', '').replace('Career/Work', 'Career');
         return (
-          <text key={i} x={lx} y={ly + 4} textAnchor={anchor} fontSize="8.5" fill="#6b5a4e" fontFamily="Georgia, serif">
+          <text key={i} x={lx} y={ly + 5} textAnchor={anchor} fontSize="13" fill="#6b5a4e" fontFamily="Georgia, serif" fontWeight="500">
             {short}
           </text>
         );
@@ -291,7 +291,7 @@ export default function Dashboard() {
                   {isCompleted && <CheckCircle className="text-emerald-500" size={16} />}
                   {isLocked && <Lock className="text-gray-300" size={16} />}
                   {isCurrent && (
-                    <span className="text-[10px] font-bold text-[#c0736a] uppercase tracking-wider">Current</span>
+                    <span className="text-xs font-bold text-[#c0736a] uppercase tracking-wider">Current</span>
                   )}
                 </div>
                 <h4 className="font-serif font-medium text-gray-900 text-sm mb-0.5">{week.title}</h4>
