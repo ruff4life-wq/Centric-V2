@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 export default function ModuleView() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { completeWeek, saveJournalEntry, state } = useUser();
+  const { completeWeek, saveJournalEntry, state, canCompleteWeek, daysIntoWeek } = useUser();
   
   const weekId = parseInt(id || '1');
   const cycleWeeks = getCycleWeeks(state.cycle || 1);
@@ -298,13 +298,25 @@ export default function ModuleView() {
       </section>
 
       {/* Completion Action */}
-      <div className="flex justify-center pt-8">
-        <button
-          onClick={handleComplete}
-          className="bg-sage-900 text-white px-8 py-4 rounded-full font-medium hover:bg-black transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center gap-2"
-        >
-          Complete Week {content.id} <CheckCircle size={20} />
-        </button>
+      <div className="flex flex-col items-center pt-8 gap-3">
+        {canCompleteWeek() ? (
+          <button
+            onClick={handleComplete}
+            className="bg-sage-900 text-white px-8 py-4 rounded-full font-medium hover:bg-black transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center gap-2"
+          >
+            Complete Week {content.id} <CheckCircle size={20} />
+          </button>
+        ) : (
+          <div className="text-center space-y-2">
+            <div className="bg-sage-50 border border-sage-200 rounded-2xl px-8 py-4 inline-flex items-center gap-3">
+              <CheckCircle className="text-sage-300" size={20} />
+              <span className="text-sage-500 font-serif">Complete Week {content.id}</span>
+            </div>
+            <p className="text-xs text-sage-400 italic">
+              Unlocks on day 5 — keep showing up. Day {daysIntoWeek()} of 7.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Disclaimer */}

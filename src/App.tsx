@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { UserProvider, useUser } from './context/UserContext';
 import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
+import Today from './components/Today';
 import Assessment from './components/Assessment';
 import ModuleView from './components/ModuleView';
 import CheckIn from './components/CheckIn';
@@ -24,7 +25,8 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Navigate to="/dashboard" replace />} />
+        <Route index element={<Navigate to="/today" replace />} />
+        <Route path="today" element={<Today />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="modules" element={<Navigate to={`/modules/${state.currentWeek}`} replace />} />
         <Route path="modules/:id" element={<ModuleView />} />

@@ -22,9 +22,12 @@ interface UserState {
   name: string;
   assessment: AssessmentData;
   completedWeeks: number[];
-  journalEntries: Record<number, string>; // weekId -> JSON string of answers
+  journalEntries: Record<number, string>;
   chatHistory: Message[];
   cycle: number;
+  weekStartedAt: string | null;   // ISO timestamp — when current week began
+  lastCheckInDate: string | null; // ISO date string — last daily check-in
+  checkInHistory: Record<string, string>; // date -> feeling key
 }
 
 interface UserContextType {
@@ -35,6 +38,9 @@ interface UserContextType {
   setName: (name: string) => void;
   addChatMessage: (message: Message) => void;
   resetProgress: () => void;
+  recordCheckIn: (feeling: string) => void;
+  canCompleteWeek: () => boolean;
+  daysIntoWeek: () => number;
 }
 
 const defaultState: UserState = {
@@ -60,6 +66,9 @@ const defaultState: UserState = {
   journalEntries: {},
   chatHistory: [],
   cycle: 1,
+  weekStartedAt: null,
+  lastCheckInDate: null,
+  checkInHistory: {},
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -74,10 +83,12 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         return {
           ...defaultState,
           ...parsed,
-          // Ensure nested objects are also merged if necessary, though top-level merge covers new top-level fields
           assessment: { ...defaultState.assessment, ...(parsed.assessment || {}) },
           chatHistory: parsed.chatHistory || defaultState.chatHistory,
-          cycle: parsed.cycle || defaultState.cycle
+          cycle: parsed.cycle || defaultState.cycle,
+          weekStartedAt: parsed.weekStartedAt || defaultState.weekStartedAt,
+          lastCheckInDate: parsed.lastCheckInDate || defaultState.lastCheckInDate,
+          checkInHistory: parsed.checkInHistory || defaultState.checkInHistory,
         };
       } catch (e) {
         console.error('Failed to parse saved state', e);
@@ -94,34 +105,63 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const updateAssessment = (data: Partial<AssessmentData>) => {
     setState(prev => ({
       ...prev,
-      assessment: { ...prev.assessment, ...data }
+      assessment: { ...prev.assessment, ...data },
+      weekStartedAt: data.completed && !prev.assessment.completed
+        ? new Date().toISOString()
+        : prev.weekStartedAt,
     }));
   };
 
   const completeWeek = (weekId: number) => {
     setState(prev => {
-      // If already completed this week in this cycle, do nothing
       if (prev.completedWeeks.includes(weekId)) return prev;
 
-      // If completing week 6, reset for next cycle
       if (weekId === 6) {
         return {
           ...prev,
           completedWeeks: [],
           currentWeek: 1,
           cycle: (prev.cycle || 1) + 1,
-          journalEntries: {}, // Clear journal for fresh start
-          // Keep assessment and chat history
+          journalEntries: {},
+          weekStartedAt: new Date().toISOString(),
         };
       }
 
-      // Normal progression
       return {
         ...prev,
         completedWeeks: [...prev.completedWeeks, weekId],
-        currentWeek: weekId + 1
+        currentWeek: weekId + 1,
+        weekStartedAt: new Date().toISOString(),
       };
     });
+  };
+
+  // Record a daily check-in feeling
+  const recordCheckIn = (feeling: string) => {
+    const today = new Date().toISOString().split('T')[0];
+    setState(prev => ({
+      ...prev,
+      lastCheckInDate: today,
+      checkInHistory: { ...prev.checkInHistory, [today]: feeling },
+    }));
+  };
+
+  // Returns true if 5+ days have passed since week started
+  const canCompleteWeek = (): boolean => {
+    if (!state.weekStartedAt) return true; // no timer set yet — allow for legacy users
+    const started = new Date(state.weekStartedAt);
+    const now = new Date();
+    const diffDays = Math.floor((now.getTime() - started.getTime()) / (1000 * 60 * 60 * 24));
+    return diffDays >= 5;
+  };
+
+  // How many days into the current week (1-7)
+  const daysIntoWeek = (): number => {
+    if (!state.weekStartedAt) return 7; // legacy — treat as full week
+    const started = new Date(state.weekStartedAt);
+    const now = new Date();
+    const diff = Math.floor((now.getTime() - started.getTime()) / (1000 * 60 * 60 * 24));
+    return Math.min(diff + 1, 7);
   };
 
   const saveJournalEntry = (weekId: number, entry: string) => {
@@ -147,7 +187,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <UserContext.Provider value={{ state, updateAssessment, completeWeek, saveJournalEntry, setName, addChatMessage, resetProgress }}>
+    <UserContext.Provider value={{ state, updateAssessment, completeWeek, saveJournalEntry, setName, addChatMessage, resetProgress, recordCheckIn, canCompleteWeek, daysIntoWeek }}>
       {children}
     </UserContext.Provider>
   );
