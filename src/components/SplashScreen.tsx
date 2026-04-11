@@ -47,16 +47,16 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
     setTimeout(() => {
       el.style.transition = 'top 2.2s cubic-bezier(0.25,0.46,0.45,0.94), left 2.2s cubic-bezier(0.25,0.46,0.45,0.94), opacity 1s ease';
-      el.style.top = '38%';
+      el.style.top = '20%';
       el.style.left = '50%';
       el.style.opacity = '1';
       flap(2.2, 0.2);
     }, 300);
 
-    // Phase 2 — glide down to land on wordmark
+    // Phase 2 — glide down to land just above the wordmark
     setTimeout(() => {
       el.style.transition = 'top 1.4s cubic-bezier(0.34,1.1,0.64,1), left 1s ease';
-      el.style.top = '52%';
+      el.style.top = '38%';
       flap(1.0, 0.55);
       setPhase('landed');
     }, 2700);
@@ -158,7 +158,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
               fontSize: 'clamp(42px, 8vw, 68px)',
               color: '#4a2e24',
               letterSpacing: '-1px',
-              marginTop: '80px',
+              marginTop: '120px',
               userSelect: 'none',
             }}
           >
