@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { UserProvider, useUser } from './context/UserContext';
 import Layout from './components/Layout';
@@ -6,9 +7,17 @@ import Assessment from './components/Assessment';
 import ModuleView from './components/ModuleView';
 import ChatInterface from './components/ChatInterface';
 import Profile from './components/Profile';
+import SplashScreen from './components/SplashScreen';
 
 function AppRoutes() {
   const { state } = useUser();
+  const [splashDone, setSplashDone] = useState<boolean>(
+    () => localStorage.getItem('agc_splash_seen') === '1'
+  );
+
+  if (!splashDone) {
+    return <SplashScreen onComplete={() => setSplashDone(true)} />;
+  }
 
   if (!state.assessment.completed) {
     return <Assessment />;
