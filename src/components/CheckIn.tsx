@@ -127,43 +127,43 @@ const responses: Record<string, Response> = {
   overwhelmed: {
     badge: 'ACT · Acceptance',
     badgeStyle: 'bg-blue-50 text-blue-700 border border-blue-100',
-    text: 'Overwhelm often signals that you are caring deeply — and that your nervous system is doing its job. You don\'t have to fix the feeling. You just have to make room for it.',
-    exercise: 'Place one hand on your chest. Breathe in for 4 counts, out for 6. As you exhale, silently say: "I can hold this." Repeat three times. You don\'t have to carry it perfectly — just carry it.',
+    text: 'Overwhelm often signals that you are caring deeply, and that your nervous system is doing its job. You don\'t have to fix the feeling. You just have to make room for it.',
+    exercise: 'Place one hand on your chest. Breathe in for 4 counts, out for 6. As you exhale, silently say: "I can hold this." Repeat three times. You don\'t have to carry it perfectly, just carry it.',
     dest: { label: 'Take me to the Daily Pause', route: 'pause' },
   },
   stuck: {
     badge: 'ACT · Committed Action',
     badgeStyle: 'bg-amber-50 text-amber-700 border border-amber-100',
-    text: 'Feeling stuck isn\'t failure — it\'s information. It usually means there\'s a value underneath that matters to you, and something is blocking the path toward it.',
-    exercise: 'Ask yourself: "What would I be doing right now if I weren\'t stuck?" Write one word. That word points toward a value. What is one tiny step — even five minutes — I could take in that direction today?',
+    text: 'Feeling stuck isn\'t failure, it\'s information. It usually means there\'s a value underneath that matters to you, and something is blocking the path toward it.',
+    exercise: 'Ask yourself: "What would I be doing right now if I weren\'t stuck?" Write one word. That word points toward a value. What is one tiny step, even five minutes, I could take in that direction today?',
     dest: { label: 'Continue this week\'s module', route: 'module' },
   },
   failing: {
     badge: 'ACT · Defusion',
     badgeStyle: 'bg-rose-50 text-rose-700 border border-rose-100',
-    text: 'Your mind is telling you a story about not being enough. That story feels very real — but notice it is a thought, not a fact.',
+    text: 'Your mind is telling you a story about not being enough. That story feels very real, but notice it is a thought, not a fact.',
     exercise: 'Say the thought out loud. Now say it again with this in front of it: "I\'m having the thought that..." Notice the small distance that creates. You are not the thought. You are the one who can observe it.',
     dest: { label: 'Continue this week\'s module', route: 'module' },
   },
   disconnected: {
     badge: 'ACT · Present Moment',
     badgeStyle: 'bg-slate-50 text-slate-600 border border-slate-100',
-    text: 'Disconnection is often the mind\'s way of protecting you from feeling too much. It\'s not a flaw — it\'s a signal to come back to your body.',
+    text: 'Disconnection is often the mind\'s way of protecting you from feeling too much. It\'s not a flaw, it\'s a signal to come back to your body.',
     exercise: 'Name 5 things you can see right now. 4 you can touch. 3 you can hear. 2 you can smell. 1 thing you are grateful for in this moment. Welcome back.',
     dest: { label: 'Take me to the Daily Pause', route: 'pause' },
   },
   values: {
     badge: 'ACT · Values',
     badgeStyle: 'bg-emerald-50 text-emerald-700 border border-emerald-100',
-    text: 'Checking in with your values is one of the most courageous things a helping professional can do. It takes honesty to ask — "am I living what I believe?"',
-    exercise: 'Think of the pillar you\'re currently working on. Ask: "In the last 7 days, did my actions reflect what I say matters most?" Not to judge — just to see. What one small thing could bring more alignment this week?',
+    text: 'Checking in with your values is one of the most courageous things a helping professional can do. It takes honesty to ask, "am I living what I believe?"',
+    exercise: 'Think of the pillar you\'re currently working on. Ask: "In the last 7 days, did my actions reflect what I say matters most?" Not to judge, just to see. What one small thing could bring more alignment this week?',
     dest: { label: 'Continue this week\'s module', route: 'module' },
   },
   crisis: {
     badge: 'Please read',
     badgeStyle: 'bg-red-50 text-red-700 border border-red-100',
-    text: 'It takes real courage to name that you\'re in crisis. Please reach out to a real person right now — your supervisor, a trusted colleague, or one of the crisis lines below.',
-    exercise: 'Call or text 988 (Suicide & Crisis Lifeline). You can also text HOME to 741741 (Crisis Text Line). This app is a wellness companion — it cannot provide the level of care you deserve right now. Please don\'t navigate this alone.',
+    text: 'It takes real courage to name that you\'re in crisis. Please reach out to a real person right now, your supervisor, a trusted colleague, or one of the crisis lines below.',
+    exercise: 'Call or text 988 (Suicide & Crisis Lifeline). You can also text HOME to 741741 (Crisis Text Line). This app is a wellness companion, it cannot provide the level of care you deserve right now. Please don\'t navigate this alone.',
     isCrisis: true,
   },
 };
@@ -255,7 +255,7 @@ export default function CheckIn() {
                     This week's anchor
                   </p>
                   <p className="text-sm font-serif text-sage-700">
-                    Week {state.currentWeek} — {currentWeekContent.title}
+                    Week {state.currentWeek}, {currentWeekContent.title}
                   </p>
                 </div>
               </motion.div>
@@ -329,8 +329,8 @@ export default function CheckIn() {
                   Reach out now
                 </p>
                 {[
-                  { num: '988', desc: 'Suicide & Crisis Lifeline — call or text' },
-                  { num: '741741', desc: 'Crisis Text Line — text HOME' },
+                  { num: '988', desc: 'Suicide & Crisis Lifeline, call or text' },
+                  { num: '741741', desc: 'Crisis Text Line, text HOME' },
                   { num: '911', desc: 'If you are in immediate danger' },
                 ].map(r => (
                   <div key={r.num} className="flex items-baseline gap-3">
@@ -363,7 +363,7 @@ export default function CheckIn() {
                     </p>
                     <p className="font-serif text-[#4a2e24] text-sm mt-0.5">
                       {response.dest.route === 'module'
-                        ? `Week ${state.currentWeek} — ${currentWeekContent?.title}`
+                        ? `Week ${state.currentWeek}, ${currentWeekContent?.title}`
                         : 'Daily Pause'}
                     </p>
                   </div>

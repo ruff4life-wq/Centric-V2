@@ -8,20 +8,20 @@ import { getCycleWeeks } from '../data/curriculum';
 // Date-seeded so everyone sees the same quote on the same day.
 // Dr. G can add her own quotes to this array over time.
 const quotes = [
-  { text: "You cannot pour from an empty vessel. Filling yourself is not selfishness — it's stewardship.", author: "AGC" },
+  { text: "You cannot pour from an empty vessel. Filling yourself is not selfishness, it's stewardship.", author: "AGC" },
   { text: "The most radical act a helper can commit is allowing themselves to be helped.", author: "AGC" },
   { text: "Rest is not the reward for finished work. Rest is part of the work.", author: "AGC" },
   { text: "You were called to this work. You were not called to be consumed by it.", author: "AGC" },
   { text: "Burnout is not a sign of weakness. It is a sign that you have been strong for too long without being held.", author: "AGC" },
-  { text: "The compassion you give so freely — you are allowed to receive it too.", author: "AGC" },
+  { text: "The compassion you give so freely, you are allowed to receive it too.", author: "AGC" },
   { text: "Healing is not linear. Neither is the journey of the one who walks beside others through it.", author: "AGC" },
   { text: "A tree does not grow by working harder. It grows by sending roots deeper.", author: "AGC" },
   { text: "You are not failing your clients when you take care of yourself. You are modeling what you teach.", author: "AGC" },
   { text: "The present moment is where God meets us. Not in the next task. Not after the next session. Now.", author: "AGC" },
   { text: "What you carry from the room after a session matters as much as what you brought into it.", author: "AGC" },
-  { text: "Boundaries are not walls. They are doors — and you hold the handle.", author: "AGC" },
+  { text: "Boundaries are not walls. They are doors, and you hold the handle.", author: "AGC" },
   { text: "You do not have to earn rest. You were made to need it.", author: "AGC" },
-  { text: "The work you do in the unseen places — the reflection, the prayer, the pause — this is the real work.", author: "AGC" },
+  { text: "The work you do in the unseen places, the reflection, the prayer, the pause, this is the real work.", author: "AGC" },
   { text: "You are not responsible for the outcomes. You are responsible for your presence.", author: "AGC" },
   { text: "Even Elijah needed to eat and sleep before God could speak to him again.", author: "Scripture · 1 Kings 19" },
   { text: "Come to me, all who are weary and burdened, and I will give you rest.", author: "Matthew 11:28" },
@@ -33,14 +33,14 @@ const quotes = [
   { text: "I can do all things through Christ who strengthens me.", author: "Philippians 4:13" },
   { text: "The Lord is close to the brokenhearted and saves those who are crushed in spirit.", author: "Psalm 34:18" },
   { text: "Healing takes courage, and we all have courage, even if we have to dig a little to find it.", author: "Tori Amos" },
-  { text: "Almost everything will work again if you unplug it for a few minutes — including you.", author: "Anne Lamott" },
+  { text: "Almost everything will work again if you unplug it for a few minutes, including you.", author: "Anne Lamott" },
   { text: "You don't have to be positive all the time. It's perfectly okay to feel sad, angry, annoyed, frustrated, scared, or anxious.", author: "Lori Deschene" },
   { text: "Owning our story and loving ourselves through that process is the bravest thing we'll ever do.", author: "Brené Brown" },
   { text: "Caring for myself is not self-indulgence, it is self-preservation.", author: "Audre Lorde" },
   { text: "You yourself, as much as anybody in the entire universe, deserve your love and affection.", author: "Buddha" },
-  { text: "In the middle of difficulty lies opportunity — for growth, for understanding, for grace.", author: "AGC" },
+  { text: "In the middle of difficulty lies opportunity, for growth, for understanding, for grace.", author: "AGC" },
   { text: "What gets watered, grows. What gets neglected, withers. Water yourself today.", author: "AGC" },
-  { text: "The pause between one breath and the next — that is where restoration lives.", author: "AGC" },
+  { text: "The pause between one breath and the next, that is where restoration lives.", author: "AGC" },
   { text: "You were known before you were formed. Your calling is not what you do for God. It is who you are with God.", author: "AGC" },
   { text: "Not all progress is visible. Some of the most important growth happens underground, in the roots.", author: "AGC" },
   { text: "The goal is not to be unaffected. The goal is to be unmoved from your center.", author: "AGC" },
@@ -50,7 +50,7 @@ const quotes = [
   { text: "God's mercies are new every morning. So is your capacity to begin again.", author: "Lamentations 3:22–23" },
 ];
 
-// Daily intentions per week — 7 per week, tied to the pillar
+// Daily intentions per week, 7 per week, tied to the pillar
 const weeklyIntentions: Record<number, string[]> = {
   1: [
     "Today, notice one way your body is asking for care.",
@@ -63,7 +63,7 @@ const weeklyIntentions: Record<number, string[]> = {
   ],
   2: [
     "Today, name one emotion before you react to it.",
-    "Today, notice the thoughts that drain you — and don't follow them.",
+    "Today, notice the thoughts that drain you, and don't follow them.",
     "Today, let one feeling be present without trying to fix it.",
     "Today, speak to yourself as kindly as you would to a client.",
     "Today, take a 2-minute pause when overwhelm arrives.",
@@ -74,9 +74,9 @@ const weeklyIntentions: Record<number, string[]> = {
     "Today, listen to one person without planning your response.",
     "Today, say one true thing in a relationship that needs honesty.",
     "Today, release one expectation of someone you love.",
-    "Today, practice one act of presence — phones down, eyes up.",
+    "Today, practice one act of presence, phones down, eyes up.",
     "Today, say no to one thing to say yes to someone that matters.",
-    "Today, forgive one small thing — even if only in your heart.",
+    "Today, forgive one small thing, even if only in your heart.",
     "Today, let someone take care of you.",
   ],
   4: [
@@ -85,14 +85,14 @@ const weeklyIntentions: Record<number, string[]> = {
     "Today, leave work at the time you planned.",
     "Today, find one small thing about your work to be grateful for.",
     "Today, delegate or decline one thing you don't need to carry.",
-    "Today, bring your full self to one task — not a fraction.",
+    "Today, bring your full self to one task, not a fraction.",
     "Today, ask: am I working for God or for approval?",
   ],
   5: [
     "Today, make one financial decision from trust, not fear.",
     "Today, practice gratitude for one resource you take for granted.",
     "Today, notice where money anxiety shows up in your body.",
-    "Today, give something — however small — without expecting return.",
+    "Today, give something, however small, without expecting return.",
     "Today, review one financial area with honesty and grace.",
     "Today, release one money worry to God in prayer.",
     "Today, celebrate one way you have been a faithful steward.",
@@ -102,7 +102,7 @@ const weeklyIntentions: Record<number, string[]> = {
     "Today, notice where your life feels most aligned.",
     "Today, ask: what is God inviting me into right now?",
     "Today, live one of your stated values in a specific, concrete way.",
-    "Today, be still — even for two minutes.",
+    "Today, be still, even for two minutes.",
     "Today, reflect on how far you have come.",
     "Today, step forward in obedience to one thing you already know.",
   ],
@@ -155,12 +155,12 @@ const feelings = [
 ];
 
 const responses: Record<string, { badge: string; badgeStyle: string; text: string; exercise: string; dest?: { label: string; route: 'pause' | 'module' }; isCrisis?: boolean }> = {
-  overwhelmed: { badge: 'ACT · Acceptance', badgeStyle: 'bg-blue-50 text-blue-700 border border-blue-100', text: 'Overwhelm often signals that you are caring deeply — and that your nervous system is doing its job. You don\'t have to fix the feeling. You just have to make room for it.', exercise: 'Place one hand on your chest. Breathe in for 4 counts, out for 6. As you exhale, silently say: "I can hold this." Repeat three times.', dest: { label: 'Take me to the Daily Pause', route: 'pause' } },
-  stuck: { badge: 'ACT · Committed Action', badgeStyle: 'bg-amber-50 text-amber-700 border border-amber-100', text: 'Feeling stuck isn\'t failure — it\'s information. There\'s a value underneath that matters to you, and something blocking the path toward it.', exercise: 'Ask yourself: "What would I be doing right now if I weren\'t stuck?" Write one word. That word points toward a value. Take one tiny step in that direction today.', dest: { label: 'Continue this week\'s module', route: 'module' } },
-  failing: { badge: 'ACT · Defusion', badgeStyle: 'bg-rose-50 text-rose-700 border border-rose-100', text: 'Your mind is telling you a story about not being enough. That story feels very real — but notice it is a thought, not a fact.', exercise: 'Say the thought out loud. Now say it again with "I\'m having the thought that..." in front of it. Notice the small distance that creates.', dest: { label: 'Continue this week\'s module', route: 'module' } },
-  disconnected: { badge: 'ACT · Present Moment', badgeStyle: 'bg-slate-50 text-slate-600 border border-slate-100', text: 'Disconnection is often the mind\'s way of protecting you from feeling too much. It\'s not a flaw — it\'s a signal to come back to your body.', exercise: 'Name 5 things you can see. 4 you can touch. 3 you can hear. 2 you can smell. 1 thing you are grateful for. Welcome back.', dest: { label: 'Take me to the Daily Pause', route: 'pause' } },
-  values: { badge: 'ACT · Values', badgeStyle: 'bg-emerald-50 text-emerald-700 border border-emerald-100', text: 'Checking in with your values is one of the most courageous things a helping professional can do. It takes honesty to ask — "am I living what I believe?"', exercise: 'Ask: "In the last 7 days, did my actions reflect what I say matters most?" Not to judge — just to see. What one small thing could bring more alignment this week?', dest: { label: 'Continue this week\'s module', route: 'module' } },
-  crisis: { badge: 'Please read', badgeStyle: 'bg-red-50 text-red-700 border border-red-100', text: 'It takes real courage to name that you\'re in crisis. Please reach out to a real person right now — your supervisor, a trusted colleague, or one of the crisis lines below.', exercise: 'Call or text 988 (Suicide & Crisis Lifeline). Text HOME to 741741 (Crisis Text Line). This app cannot provide the level of care you deserve right now.', isCrisis: true },
+  overwhelmed: { badge: 'ACT · Acceptance', badgeStyle: 'bg-blue-50 text-blue-700 border border-blue-100', text: 'Overwhelm often signals that you are caring deeply, and that your nervous system is doing its job. You don\'t have to fix the feeling. You just have to make room for it.', exercise: 'Place one hand on your chest. Breathe in for 4 counts, out for 6. As you exhale, silently say: "I can hold this." Repeat three times.', dest: { label: 'Take me to the Daily Pause', route: 'pause' } },
+  stuck: { badge: 'ACT · Committed Action', badgeStyle: 'bg-amber-50 text-amber-700 border border-amber-100', text: 'Feeling stuck isn\'t failure, it\'s information. There\'s a value underneath that matters to you, and something blocking the path toward it.', exercise: 'Ask yourself: "What would I be doing right now if I weren\'t stuck?" Write one word. That word points toward a value. Take one tiny step in that direction today.', dest: { label: 'Continue this week\'s module', route: 'module' } },
+  failing: { badge: 'ACT · Defusion', badgeStyle: 'bg-rose-50 text-rose-700 border border-rose-100', text: 'Your mind is telling you a story about not being enough. That story feels very real, but notice it is a thought, not a fact.', exercise: 'Say the thought out loud. Now say it again with "I\'m having the thought that..." in front of it. Notice the small distance that creates.', dest: { label: 'Continue this week\'s module', route: 'module' } },
+  disconnected: { badge: 'ACT · Present Moment', badgeStyle: 'bg-slate-50 text-slate-600 border border-slate-100', text: 'Disconnection is often the mind\'s way of protecting you from feeling too much. It\'s not a flaw, it\'s a signal to come back to your body.', exercise: 'Name 5 things you can see. 4 you can touch. 3 you can hear. 2 you can smell. 1 thing you are grateful for. Welcome back.', dest: { label: 'Take me to the Daily Pause', route: 'pause' } },
+  values: { badge: 'ACT · Values', badgeStyle: 'bg-emerald-50 text-emerald-700 border border-emerald-100', text: 'Checking in with your values is one of the most courageous things a helping professional can do. It takes honesty to ask, "am I living what I believe?"', exercise: 'Ask: "In the last 7 days, did my actions reflect what I say matters most?" Not to judge, just to see. What one small thing could bring more alignment this week?', dest: { label: 'Continue this week\'s module', route: 'module' } },
+  crisis: { badge: 'Please read', badgeStyle: 'bg-red-50 text-red-700 border border-red-100', text: 'It takes real courage to name that you\'re in crisis. Please reach out to a real person right now, your supervisor, a trusted colleague, or one of the crisis lines below.', exercise: 'Call or text 988 (Suicide & Crisis Lifeline). Text HOME to 741741 (Crisis Text Line). This app cannot provide the level of care you deserve right now.', isCrisis: true },
 };
 
 // Date-seeded quote selector
@@ -358,7 +358,7 @@ export default function Today() {
 
               {response.isCrisis && (
                 <div className="bg-red-50 border border-red-100 rounded-xl p-4 space-y-1.5">
-                  {[{ num: '988', desc: 'Suicide & Crisis Lifeline' }, { num: '741741', desc: 'Text HOME — Crisis Text Line' }, { num: '911', desc: 'Immediate danger' }].map(r => (
+                  {[{ num: '988', desc: 'Suicide & Crisis Lifeline' }, { num: '741741', desc: 'Text HOME, Crisis Text Line' }, { num: '911', desc: 'Immediate danger' }].map(r => (
                     <div key={r.num} className="flex gap-3 items-baseline">
                       <span className="font-serif font-semibold text-red-700 w-14 flex-shrink-0">{r.num}</span>
                       <span className="text-xs text-red-600">{r.desc}</span>
@@ -396,7 +396,7 @@ export default function Today() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-[10px] font-bold tracking-widest text-sage-400 uppercase mb-1">This Week's Anchor</p>
-              <p className="font-serif text-sage-900 text-base">Week {state.currentWeek} — {currentWeekContent.title}</p>
+              <p className="font-serif text-sage-900 text-base">Week {state.currentWeek}, {currentWeekContent.title}</p>
               <p className="text-xs text-sage-400 mt-0.5 italic">{currentWeekContent.pillar}</p>
             </div>
             <svg viewBox="0 0 20 20" fill="none" width="18" height="18" className="text-sage-300 group-hover:text-[#c0736a] transition-colors flex-shrink-0">
