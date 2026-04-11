@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { Home, BookOpen, MessageCircle, User, Leaf } from 'lucide-react';
+import { Home, BookOpen, MessageCircle, User } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export default function Layout() {
@@ -17,8 +17,8 @@ export default function Layout() {
       {/* Sidebar for Desktop */}
       <aside className="hidden md:flex flex-col w-64 bg-white border-r border-sage-100 h-screen sticky top-0">
         <div className="p-8 flex items-center gap-3">
-          <div className="w-10 h-10 bg-sage-600 rounded-xl flex items-center justify-center text-white">
-            <Leaf size={20} />
+          <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center">
+            <img src="/favicon.png" alt="AGC Centric logo" className="w-10 h-10 object-cover" />
           </div>
           <span className="font-serif text-xl font-bold text-sage-900">Centric</span>
         </div>
@@ -53,8 +53,8 @@ export default function Layout() {
       {/* Mobile Header */}
       <header className="md:hidden bg-white p-4 border-b border-sage-100 sticky top-0 z-10 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-sage-600 rounded-lg flex items-center justify-center text-white">
-            <Leaf size={16} />
+          <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center">
+            <img src="/favicon.png" alt="AGC Centric logo" className="w-8 h-8 object-cover" />
           </div>
           <span className="font-serif text-lg font-bold text-sage-900">Centric</span>
         </div>
