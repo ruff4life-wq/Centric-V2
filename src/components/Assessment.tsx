@@ -291,7 +291,7 @@ export default function Assessment() {
               />
               <h1 className="text-3xl font-serif text-sage-900">Welcome to Centric</h1>
               <p className="text-sage-600">
-                A safe space for those who care for others. Before we begin, how should I address you?
+                The place where you can explore your well-being. Before we begin, how should I address you?
               </p>
               <input
                 type="text"
