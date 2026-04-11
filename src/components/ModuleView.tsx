@@ -5,6 +5,23 @@ import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle, ArrowLeft, BookOpen, PenTool, Heart, Save, Sparkles, RefreshCw } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
+// Daily intentions per week — same data as Today screen
+const weeklyIntentions: Record<number, string[]> = {
+  1: ["Today, notice one way your body is asking for care.","Today, take one intentional breath before each new task.","Today, honor one physical boundary you've been overriding.","Today, thank your body for one thing it does without being asked.","Today, rest without justifying it.","Today, nourish yourself as carefully as you nourish others.","Today, move your body in one small, gentle way."],
+  2: ["Today, name one emotion before you react to it.","Today, notice the thoughts that drain you, and don't follow them.","Today, let one feeling be present without trying to fix it.","Today, speak to yourself as kindly as you would to a client.","Today, take a 2-minute pause when overwhelm arrives.","Today, invite God into one emotion you've been carrying alone.","Today, celebrate one small inner victory."],
+  3: ["Today, listen to one person without planning your response.","Today, say one true thing in a relationship that needs honesty.","Today, release one expectation of someone you love.","Today, practice one act of presence, phones down, eyes up.","Today, say no to one thing to say yes to someone that matters.","Today, forgive one small thing, even if only in your heart.","Today, let someone take care of you."],
+  4: ["Today, begin your work with one minute of intention.","Today, notice when your work shifts from calling to compulsion.","Today, leave work at the time you planned.","Today, find one small thing about your work to be grateful for.","Today, delegate or decline one thing you don't need to carry.","Today, bring your full self to one task, not a fraction.","Today, ask: am I working for God or for approval?"],
+  5: ["Today, make one financial decision from trust, not fear.","Today, practice gratitude for one resource you take for granted.","Today, notice where money anxiety shows up in your body.","Today, give something, however small, without expecting return.","Today, review one financial area with honesty and grace.","Today, release one money worry to God in prayer.","Today, celebrate one way you have been a faithful steward."],
+  6: ["Today, begin with God before beginning anything else.","Today, notice where your life feels most aligned.","Today, ask: what is God inviting me into right now?","Today, live one of your stated values in a specific, concrete way.","Today, be still, even for two minutes.","Today, reflect on how far you have come.","Today, step forward in obedience to one thing you already know."],
+};
+
+function getDailyIntention(weekId: number): string {
+  const intentions = weeklyIntentions[weekId] || weeklyIntentions[1];
+  const day = new Date().getDay();
+  const idx = day === 0 ? 6 : day - 1;
+  return intentions[idx];
+}
+
 export default function ModuleView() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -205,7 +222,7 @@ export default function ModuleView() {
 
       <header className="space-y-4">
         <div className="inline-block px-3 py-1 bg-sage-100 text-sage-700 rounded-full text-xs font-bold tracking-wide uppercase">
-          Week {content.id} • {content.pillar}
+          Week {content.id}, {content.pillar}
         </div>
         <h1 className="text-4xl font-serif text-sage-900 leading-tight">
           {content.title}
@@ -213,6 +230,19 @@ export default function ModuleView() {
         <p className="text-lg text-sage-600 leading-relaxed">
           {content.overview}
         </p>
+
+        {/* Daily intention — contextual reinforcement */}
+        <div className="bg-[#faf4f0] border border-[#ead5c8] rounded-2xl p-5 flex gap-4 items-start mt-2">
+          <div className="w-1 self-stretch bg-[#c0736a] rounded-full opacity-60 flex-shrink-0" />
+          <div>
+            <p className="text-xs font-bold tracking-widest text-[#c0736a] uppercase mb-1.5">
+              Today's Intention
+            </p>
+            <p className="font-serif text-[#4a2e24] text-sm leading-relaxed">
+              {getDailyIntention(content.id)}
+            </p>
+          </div>
+        </div>
       </header>
 
       <hr className="border-sage-200" />

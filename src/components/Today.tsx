@@ -200,6 +200,23 @@ export default function Today() {
     return 'Good evening';
   };
 
+  // Days away calculation
+  const daysAway = (() => {
+    if (!state.lastCheckInDate) return 0;
+    const last = new Date(state.lastCheckInDate);
+    const now = new Date();
+    const lastDate = new Date(last.getFullYear(), last.getMonth(), last.getDate());
+    const nowDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    return Math.floor((nowDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
+  })();
+
+  const reEngagementMessage = (() => {
+    if (daysAway >= 7) return `It has been ${daysAway} days. Welcome back. No explanation needed — just begin again.`;
+    if (daysAway >= 3) return `You've been away for a few days. That's okay. Today is a good day to return.`;
+    if (daysAway === 2) return `Welcome back. Yesterday passed without you — and that's okay. Today counts.`;
+    return null;
+  })();
+
   return (
     <div className="max-w-lg mx-auto pb-24 space-y-6">
 
@@ -210,11 +227,25 @@ export default function Today() {
         transition={{ duration: 0.4 }}
       >
         <p className="text-xs font-semibold tracking-[0.2em] text-[#c0736a] uppercase mb-1">
-          Cycle {state.cycle || 1} · Week {state.currentWeek} · Day {day} of 7
+          Cycle {state.cycle || 1}, Week {state.currentWeek}, Day {day} of 7
         </p>
         <h1 className="text-3xl font-serif text-sage-900">
           {greeting()}, {state.name || 'friend'}.
         </h1>
+        {reEngagementMessage ? (
+          <motion.p
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-sm font-serif italic text-[#c0736a] mt-2 leading-relaxed"
+          >
+            {reEngagementMessage}
+          </motion.p>
+        ) : (
+          <p className="text-sm text-sage-400 font-serif italic mt-1">
+            Here is your practice for today.
+          </p>
+        )}
       </motion.div>
 
       {/* ── Daily Quote ── */}
