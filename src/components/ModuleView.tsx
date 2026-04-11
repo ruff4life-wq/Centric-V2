@@ -19,6 +19,9 @@ export default function ModuleView() {
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [cycleComplete, setCycleComplete] = useState(false);
+  const [showReflectionGate, setShowReflectionGate] = useState(false);
+
+  const hasAnyReflection = answers.some(a => a.trim().length > 0);
 
   // Load existing answers
   useEffect(() => {
@@ -55,6 +58,21 @@ export default function ModuleView() {
   };
 
   const handleComplete = () => {
+    if (!hasAnyReflection) {
+      setShowReflectionGate(true);
+      return;
+    }
+    handleSave();
+    if (weekId === 6) {
+      setCycleComplete(true);
+    } else {
+      completeWeek(weekId);
+      navigate('/dashboard');
+    }
+  };
+
+  const handleCompleteAnyway = () => {
+    setShowReflectionGate(false);
     handleSave();
     if (weekId === 6) {
       setCycleComplete(true);
@@ -144,6 +162,40 @@ export default function ModuleView() {
 
   return (
     <div className="max-w-3xl mx-auto pb-20 space-y-8">
+
+      {/* Reflection Gate Modal */}
+      {showReflectionGate && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{background: 'rgba(74,46,36,0.45)'}}>
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
+            <div className="text-center space-y-4">
+              <div className="w-14 h-14 bg-sand-100 rounded-full flex items-center justify-center mx-auto">
+                <PenTool className="text-sand-600" size={24} />
+              </div>
+              <h3 className="text-xl font-serif text-sage-900">Before you move on...</h3>
+              <p className="text-sage-600 text-sm leading-relaxed">
+                You haven't written anything in your reflections yet — and this is where the real work happens. Even a sentence or two makes a difference.
+              </p>
+              <p className="text-sage-500 text-xs italic">
+                "The unexamined life is not worth living." — and the unexamined week loses its fruit.
+              </p>
+              <div className="space-y-3 pt-2">
+                <button
+                  onClick={() => setShowReflectionGate(false)}
+                  className="w-full bg-sage-700 text-white py-3 rounded-xl font-serif hover:bg-sage-800 transition-colors"
+                >
+                  Give me a few more minutes
+                </button>
+                <button
+                  onClick={handleCompleteAnyway}
+                  className="w-full py-3 rounded-xl border border-sage-200 text-sage-500 text-sm hover:bg-sage-50 transition-colors"
+                >
+                  Continue without reflecting
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <button 
         onClick={() => navigate('/dashboard')}
         className="flex items-center gap-2 text-sage-600 hover:text-sage-800 transition-colors mb-4"
@@ -254,6 +306,11 @@ export default function ModuleView() {
           Complete Week {content.id} <CheckCircle size={20} />
         </button>
       </div>
+
+      {/* Disclaimer */}
+      <p className="text-center text-xs text-sage-300 pb-4 leading-relaxed">
+        Centric supports your wellness practice. For clinical concerns, please contact a licensed professional.
+      </p>
     </div>
   );
 }

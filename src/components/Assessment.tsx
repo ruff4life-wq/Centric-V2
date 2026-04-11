@@ -49,6 +49,7 @@ export default function Assessment() {
       >
         {step === 0 && (
           <div className="space-y-6 text-center">
+            <img src="/favicon.png" alt="AGC Centric" className="w-14 h-14 rounded-2xl mx-auto" onError={(e) => (e.currentTarget.style.display='none')} />
             <h1 className="text-3xl font-serif text-sage-900">Welcome to Centric</h1>
             <p className="text-sage-600">
               A safe space for those who care for others. Before we begin, how should I address you?
@@ -57,15 +58,33 @@ export default function Assessment() {
               type="text"
               value={localName}
               onChange={(e) => setLocalName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && localName && handleNext()}
               placeholder="Your Name"
               className="w-full text-center text-xl border-b-2 border-sage-200 focus:border-sage-500 outline-none py-2 bg-transparent"
             />
+
+            {/* Expectation framing */}
+            <div className="bg-sand-50 border border-sand-100 rounded-2xl p-4 text-left space-y-2">
+              <p className="text-xs font-bold tracking-widest text-sand-700 uppercase">Before you begin</p>
+              <p className="text-sm text-sand-800 leading-relaxed italic font-serif">
+                "This is not a course. It's a practice. A course asks you to show up once a week. A practice asks you to show up every day — even for two minutes. Especially for two minutes."
+              </p>
+              <p className="text-xs text-sand-600 leading-relaxed">
+                Your weekly module is your anchor. Your daily check-in is your compass. We'll invite you back each day — not to grade you, but to ground you.
+              </p>
+            </div>
+
+            {/* Disclaimer */}
+            <p className="text-xs text-sage-400 leading-relaxed px-2">
+              Centric is a wellness companion, not a clinical service. It supports your journey — it does not replace therapy, medical care, or crisis intervention. If you are in crisis, please call or text <strong>988</strong>.
+            </p>
+
             <button
               onClick={handleNext}
               disabled={!localName}
               className="w-full bg-sage-600 text-white py-3 rounded-xl hover:bg-sage-700 transition-colors disabled:opacity-50"
             >
-              Begin Journey
+              I understand — begin my journey
             </button>
           </div>
         )}
