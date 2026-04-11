@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { motion, AnimatePresence } from 'motion/react';
-import { curriculum } from '../data/curriculum';
+import { getCycleWeeks } from '../data/curriculum';
 
 interface Feeling {
   key: string;
@@ -83,7 +83,8 @@ export default function CheckIn() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState<string | null>(null);
 
-  const currentWeekContent = curriculum.find(c => c.id === state.currentWeek);
+  const cycleWeeks = getCycleWeeks(state.cycle || 1);
+  const currentWeekContent = cycleWeeks.find(c => c.id === state.currentWeek);
   const response = selected ? responses[selected] : null;
 
   const handleContinue = () => {

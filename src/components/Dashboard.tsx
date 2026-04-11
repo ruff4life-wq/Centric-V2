@@ -1,5 +1,5 @@
 import { useUser } from '../context/UserContext';
-import { curriculum } from '../data/curriculum';
+import { getCycleWeeks, cycles } from '../data/curriculum';
 import { motion } from 'motion/react';
 import { Play, CheckCircle, Lock, PauseCircle } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -9,7 +9,9 @@ import { cn } from '../lib/utils';
 
 export default function Dashboard() {
   const { state } = useUser();
-  const currentWeekContent = curriculum.find(c => c.id === state.currentWeek);
+  const cycleWeeks = getCycleWeeks(state.cycle || 1);
+  const currentWeekContent = cycleWeeks.find(c => c.id === state.currentWeek);
+  const currentCycle = cycles.find(c => c.cycle === (state.cycle || 1));
   const [searchParams] = useSearchParams();
   const [showPause, setShowPause] = useState(() => searchParams.get('pause') === 'true');
 
@@ -22,7 +24,7 @@ export default function Dashboard() {
           Welcome back, {state.name}.
         </h1>
         <p className="text-sage-600">
-          Cycle {state.cycle || 1} • Week {state.currentWeek} of 6 • {currentWeekContent?.pillar}
+          Cycle {state.cycle || 1}: {currentCycle?.theme} • Week {state.currentWeek} of 6 • {currentWeekContent?.pillar}
         </p>
       </header>
 

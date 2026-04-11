@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { curriculum } from '../data/curriculum';
+import { getCycleWeeks } from '../data/curriculum';
 import { useUser } from '../context/UserContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle, ArrowLeft, BookOpen, PenTool, Heart, Save, Sparkles, RefreshCw } from 'lucide-react';
@@ -11,7 +11,9 @@ export default function ModuleView() {
   const { completeWeek, saveJournalEntry, state } = useUser();
   
   const weekId = parseInt(id || '1');
-  const content = curriculum.find(c => c.id === weekId);
+  const { state } = useUser();
+  const cycleWeeks = getCycleWeeks(state.cycle || 1);
+  const content = cycleWeeks.find(c => c.id === weekId);
   
   // Local state for journal answers
   const [answers, setAnswers] = useState<string[]>([]);
