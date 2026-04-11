@@ -2,7 +2,7 @@ import { useUser } from '../context/UserContext';
 import { curriculum } from '../data/curriculum';
 import { motion } from 'motion/react';
 import { Play, CheckCircle, Lock, PauseCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import DailyPause from './DailyPause';
 import { cn } from '../lib/utils';
@@ -10,7 +10,8 @@ import { cn } from '../lib/utils';
 export default function Dashboard() {
   const { state } = useUser();
   const currentWeekContent = curriculum.find(c => c.id === state.currentWeek);
-  const [showPause, setShowPause] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [showPause, setShowPause] = useState(() => searchParams.get('pause') === 'true');
 
   return (
     <div className="space-y-8 pb-20">

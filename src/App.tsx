@@ -5,7 +5,7 @@ import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import Assessment from './components/Assessment';
 import ModuleView from './components/ModuleView';
-import ChatInterface from './components/ChatInterface';
+import CheckIn from './components/CheckIn';
 import Profile from './components/Profile';
 import SplashScreen from './components/SplashScreen';
 
@@ -28,7 +28,7 @@ function AppRoutes() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="modules" element={<Navigate to={`/modules/${state.currentWeek}`} replace />} />
         <Route path="modules/:id" element={<ModuleView />} />
-        <Route path="chat" element={<ChatInterface />} />
+        <Route path="chat" element={<CheckIn />} />
         <Route path="profile" element={<Profile />} />
       </Route>
     </Routes>

@@ -8,7 +8,7 @@ export default function Layout() {
   const navItems = [
     { path: '/dashboard', icon: Home, label: 'Home' },
     { path: '/modules', icon: BookOpen, label: 'Journey' },
-    { path: '/chat', icon: MessageCircle, label: 'Centric' },
+    { path: '/chat', icon: MessageCircle, label: 'Check In' },
     { path: '/profile', icon: User, label: 'Profile' },
   ];
 
