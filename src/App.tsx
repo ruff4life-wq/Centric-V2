@@ -11,9 +11,7 @@ import SplashScreen from './components/SplashScreen';
 
 function AppRoutes() {
   const { state } = useUser();
-  const [splashDone, setSplashDone] = useState<boolean>(
-    () => localStorage.getItem('agc_splash_seen') === '1'
-  );
+  const [splashDone, setSplashDone] = useState<boolean>(false);
 
   if (!splashDone) {
     return <SplashScreen onComplete={() => setSplashDone(true)} />;

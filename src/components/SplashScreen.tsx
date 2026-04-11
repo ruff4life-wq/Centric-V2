@@ -90,7 +90,6 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     setTimeout(() => {
       if (flapRef.current) clearInterval(flapRef.current);
       setPhase('done');
-      localStorage.setItem('agc_splash_seen', '1');
       onComplete();
     }, 9800);
 
@@ -206,7 +205,6 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
             transition={{ delay: 2.5 }}
             onClick={() => {
               if (flapRef.current) clearInterval(flapRef.current);
-              localStorage.setItem('agc_splash_seen', '1');
               setPhase('done');
               onComplete();
             }}
