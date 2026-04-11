@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { getCycleWeeks } from '../data/curriculum';
+import { feelings, responses } from '../data/feelingsData';
 
 // ─── Daily Quotes ────────────────────────────────────────────────────────────
 // Date-seeded so everyone sees the same quote on the same day.
@@ -145,23 +146,6 @@ const LifelineIcon = () => (
   </svg>
 );
 
-const feelings = [
-  { key: 'overwhelmed', label: 'Overwhelmed', sub: 'Too much, too fast', color: 'bg-blue-50', accent: 'border-blue-200 hover:border-blue-400', textColor: 'text-blue-700', icon: <WaveIcon /> },
-  { key: 'stuck', label: 'Stuck', sub: 'Not making progress', color: 'bg-amber-50', accent: 'border-amber-200 hover:border-amber-400', textColor: 'text-amber-700', icon: <RockIcon /> },
-  { key: 'failing', label: 'Not enough', sub: 'Failing my clients', color: 'bg-rose-50', accent: 'border-rose-200 hover:border-rose-400', textColor: 'text-rose-700', icon: <MirrorIcon /> },
-  { key: 'disconnected', label: 'Disconnected', sub: 'Going through motions', color: 'bg-slate-50', accent: 'border-slate-200 hover:border-slate-400', textColor: 'text-slate-600', icon: <CloudIcon /> },
-  { key: 'values', label: 'Values check', sub: 'Am I on track?', color: 'bg-emerald-50', accent: 'border-emerald-200 hover:border-emerald-400', textColor: 'text-emerald-700', icon: <CompassIcon /> },
-  { key: 'crisis', label: 'In crisis', sub: 'I need real help', color: 'bg-red-50', accent: 'border-red-200 hover:border-red-400', textColor: 'text-red-700', icon: <LifelineIcon /> },
-];
-
-const responses: Record<string, { badge: string; badgeStyle: string; text: string; exercise: string; dest?: { label: string; route: 'pause' | 'module' }; isCrisis?: boolean }> = {
-  overwhelmed: { badge: 'ACT · Acceptance', badgeStyle: 'bg-blue-50 text-blue-700 border border-blue-100', text: 'Overwhelm often signals that you are caring deeply, and that your nervous system is doing its job. You don\'t have to fix the feeling. You just have to make room for it.', exercise: 'Place one hand on your chest. Breathe in for 4 counts, out for 6. As you exhale, silently say: "I can hold this." Repeat three times.', dest: { label: 'Take me to the Daily Pause', route: 'pause' } },
-  stuck: { badge: 'ACT · Committed Action', badgeStyle: 'bg-amber-50 text-amber-700 border border-amber-100', text: 'Feeling stuck isn\'t failure, it\'s information. There\'s a value underneath that matters to you, and something blocking the path toward it.', exercise: 'Ask yourself: "What would I be doing right now if I weren\'t stuck?" Write one word. That word points toward a value. Take one tiny step in that direction today.', dest: { label: 'Continue this week\'s module', route: 'module' } },
-  failing: { badge: 'ACT · Defusion', badgeStyle: 'bg-rose-50 text-rose-700 border border-rose-100', text: 'Your mind is telling you a story about not being enough. That story feels very real, but notice it is a thought, not a fact.', exercise: 'Say the thought out loud. Now say it again with "I\'m having the thought that..." in front of it. Notice the small distance that creates.', dest: { label: 'Continue this week\'s module', route: 'module' } },
-  disconnected: { badge: 'ACT · Present Moment', badgeStyle: 'bg-slate-50 text-slate-600 border border-slate-100', text: 'Disconnection is often the mind\'s way of protecting you from feeling too much. It\'s not a flaw, it\'s a signal to come back to your body.', exercise: 'Name 5 things you can see. 4 you can touch. 3 you can hear. 2 you can smell. 1 thing you are grateful for. Welcome back.', dest: { label: 'Take me to the Daily Pause', route: 'pause' } },
-  values: { badge: 'ACT · Values', badgeStyle: 'bg-emerald-50 text-emerald-700 border border-emerald-100', text: 'Checking in with your values is one of the most courageous things a helping professional can do. It takes honesty to ask, "am I living what I believe?"', exercise: 'Ask: "In the last 7 days, did my actions reflect what I say matters most?" Not to judge, just to see. What one small thing could bring more alignment this week?', dest: { label: 'Continue this week\'s module', route: 'module' } },
-  crisis: { badge: 'Please read', badgeStyle: 'bg-red-50 text-red-700 border border-red-100', text: 'It takes real courage to name that you\'re in crisis. Please reach out to a real person right now, your supervisor, a trusted colleague, or one of the crisis lines below.', exercise: 'Call or text 988 (Suicide & Crisis Lifeline). Text HOME to 741741 (Crisis Text Line). This app cannot provide the level of care you deserve right now.', isCrisis: true },
-};
 
 // Date-seeded quote selector
 function getDailyQuote() {
