@@ -81,7 +81,7 @@ export default function Dashboard() {
       <section>
         <h2 className="text-xl font-serif text-sage-800 mb-4">Your Journey</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {curriculum.map((week) => {
+          {cycleWeeks.map((week) => {
             const isCompleted = state.completedWeeks.includes(week.id);
             const isCurrent = state.currentWeek === week.id;
             const isLocked = !isCompleted && !isCurrent;
