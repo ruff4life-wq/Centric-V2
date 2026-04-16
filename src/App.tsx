@@ -29,6 +29,7 @@ function AppRoutes() {
         <Route path="today" element={<Today />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="modules" element={<Navigate to={`/modules/${state.currentWeek}`} replace />} />
+        <Route path="modules/current" element={<Navigate to={`/modules/${state.currentWeek}`} replace />} />
         <Route path="modules/:id" element={<ModuleView />} />
         <Route path="chat" element={<CheckIn />} />
         <Route path="profile" element={<Profile />} />

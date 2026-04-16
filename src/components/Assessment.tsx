@@ -123,41 +123,89 @@ function WheelChart({ wheel }: { wheel: Record<string, number> }) {
   );
 }
 
+const DRAFT_WHEEL_KEY = 'centric_draft_wheel';
+const DRAFT_PROQOL_KEY = 'centric_draft_proqol';
+const DRAFT_TOUCHED_KEY = 'centric_draft_touched';
+const DRAFT_STEP_KEY = 'centric_draft_step';
+
+function loadDraft<T>(key: string, fallback: T): T {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 export default function Assessment() {
   const { updateAssessment, setName, state } = useUser();
   const navigate = useNavigate();
-  const [step, setStep] = useState(0);
+
+  // Restore draft step if present
+  const [step, setStep] = useState(() => loadDraft(DRAFT_STEP_KEY, 0));
   const [localName, setLocalName] = useState(state.name);
 
-  // Track which sliders have been touched
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
-  const [wheel, setWheel] = useState(state.assessment.wheelOfLife);
+  // Restore draft wheel values and touched state
+  const [touched, setTouched] = useState<Record<string, boolean>>(
+    () => loadDraft(DRAFT_TOUCHED_KEY, {})
+  );
+  const [wheel, setWheel] = useState<Record<string, number>>(
+    () => loadDraft(DRAFT_WHEEL_KEY, state.assessment.wheelOfLife)
+  );
 
-  const [proQOL, setProQOL] = useState({
-    compassion: 0,
-    burnout: 0,
-    trauma: 0,
-  });
+  // Restore draft proQOL
+  const [proQOL, setProQOL] = useState(
+    () => loadDraft(DRAFT_PROQOL_KEY, { compassion: 0, burnout: 0, trauma: 0 })
+  );
 
   // Step 3 = results screen shown before navigating
   const [showResults, setShowResults] = useState(false);
 
   const allWheelTouched = Object.keys(wheel).every(k => touched[k]);
 
+  // Autosave wheel + touched on every change
+  const updateWheel = (key: string, value: number) => {
+    const next = { ...wheel, [key]: value };
+    const nextTouched = { ...touched, [key]: true };
+    setWheel(next);
+    setTouched(nextTouched);
+    localStorage.setItem(DRAFT_WHEEL_KEY, JSON.stringify(next));
+    localStorage.setItem(DRAFT_TOUCHED_KEY, JSON.stringify(nextTouched));
+  };
+
+  // Autosave proQOL on every change
+  const updateProQOL = (key: keyof typeof proQOL, value: number) => {
+    const next = { ...proQOL, [key]: value };
+    setProQOL(next);
+    localStorage.setItem(DRAFT_PROQOL_KEY, JSON.stringify(next));
+  };
+
+  // Autosave step
+  const advanceStep = (next: number) => {
+    setStep(next);
+    localStorage.setItem(DRAFT_STEP_KEY, JSON.stringify(next));
+  };
+
+  // Clear all draft keys on successful completion
+  const clearDrafts = () => {
+    localStorage.removeItem(DRAFT_WHEEL_KEY);
+    localStorage.removeItem(DRAFT_PROQOL_KEY);
+    localStorage.removeItem(DRAFT_TOUCHED_KEY);
+    localStorage.removeItem(DRAFT_STEP_KEY);
+  };
+
   const handleNext = () => {
     if (step === 0 && localName) {
       setName(localName);
-      setStep(1);
+      advanceStep(1);
     } else if (step === 1 && allWheelTouched) {
-      setStep(2);
+      advanceStep(2);
     } else if (step === 2) {
-      // Show results FIRST — updateAssessment called on "Begin Week 1"
       setShowResults(true);
     }
   };
 
   const handleProceed = () => {
-    // Only now mark assessment complete — after user has seen results
     updateAssessment({
       wheelOfLife: wheel,
       proQOL: {
@@ -167,6 +215,7 @@ export default function Assessment() {
       },
       completed: true,
     });
+    clearDrafts();
     navigate('/today');
   };
 
@@ -380,8 +429,7 @@ export default function Assessment() {
                         max="10"
                         value={value as number}
                         onChange={(e) => {
-                          setWheel(prev => ({ ...prev, [key]: parseInt(e.target.value) }));
-                          setTouched(prev => ({ ...prev, [key]: true }));
+                          updateWheel(key, parseInt(e.target.value));
                         }}
                         className="w-full accent-sage-600 h-2 bg-sage-100 rounded-lg appearance-none cursor-pointer"
                       />

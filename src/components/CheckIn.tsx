@@ -6,10 +6,30 @@ import { getCycleWeeks } from '../data/curriculum';
 import { feelings, responses } from '../data/feelingsData';
 
 
+const DRAFT_CHECKIN_KEY = 'centric_draft_checkin';
+
 export default function CheckIn() {
   const { state } = useUser();
   const navigate = useNavigate();
-  const [selected, setSelected] = useState<string | null>(null);
+
+  // Restore today's draft selection if same-day draft exists
+  const [selected, setSelected] = useState<string | null>(() => {
+    try {
+      const raw = localStorage.getItem(DRAFT_CHECKIN_KEY);
+      if (!raw) return null;
+      const { date, feeling } = JSON.parse(raw);
+      const today = new Date().toISOString().split('T')[0];
+      return date === today ? feeling : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const handleSelect = (key: string) => {
+    const today = new Date().toISOString().split('T')[0];
+    localStorage.setItem(DRAFT_CHECKIN_KEY, JSON.stringify({ date: today, feeling: key }));
+    setSelected(key);
+  };
 
   const cycleWeeks = getCycleWeeks(state.cycle || 1);
   const currentWeekContent = cycleWeeks.find(c => c.id === state.currentWeek);
@@ -18,6 +38,7 @@ export default function CheckIn() {
 
   const handleContinue = () => {
     if (!response?.dest) return;
+    localStorage.removeItem(DRAFT_CHECKIN_KEY);
     if (response.dest.route === 'pause') {
       navigate('/dashboard?pause=true');
     } else {
@@ -57,7 +78,7 @@ export default function CheckIn() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.06, duration: 0.3 }}
-                  onClick={() => setSelected(f.key)}
+                  onClick={() => handleSelect(f.key)}
                   className={`group relative ${f.color} border ${f.accent} rounded-2xl p-5 text-left transition-all duration-200 hover:shadow-md hover:-translate-y-0.5`}
                 >
                   {/* Icon */}

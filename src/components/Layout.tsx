@@ -1,19 +1,24 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Home, BookOpen, MessageCircle, User } from 'lucide-react';
 import { cn } from '../lib/utils';
+import UpdateBanner, { useUpdateBadge } from './UpdateBanner';
 
 export default function Layout() {
   const location = useLocation();
+  const hasUpdate = useUpdateBadge();
 
   const navItems = [
-    { path: '/dashboard', icon: Home, label: 'Home' },
-    { path: '/modules', icon: BookOpen, label: 'Journey' },
+    { path: '/today', icon: Home, label: 'Today' },
+    { path: '/modules', icon: BookOpen, label: 'This Week' },
     { path: '/chat', icon: MessageCircle, label: 'Check In' },
     { path: '/profile', icon: User, label: 'Profile' },
   ];
 
   return (
     <div className="min-h-screen bg-sand-50 flex flex-col md:flex-row">
+      {/* Update banner — sits above everything, dismisses on tap */}
+      <UpdateBanner />
+
       {/* Sidebar for Desktop */}
       <aside className="hidden md:flex flex-col w-64 bg-white border-r border-sage-100 h-screen sticky top-0">
         <div className="p-8 flex items-center gap-3">
@@ -22,23 +27,32 @@ export default function Layout() {
           </div>
           <span className="font-serif text-xl font-bold text-sage-900">Centric</span>
         </div>
-        
+
         <nav className="flex-1 px-4 space-y-2">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-xl transition-colors",
-                location.pathname.startsWith(item.path)
-                  ? "bg-sage-50 text-sage-700 font-medium"
-                  : "text-sage-500 hover:bg-sage-50 hover:text-sage-600"
-              )}
-            >
-              <item.icon size={20} />
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isProfile = item.path === '/profile';
+            const isActive = location.pathname.startsWith(item.path);
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={cn(
+                  "flex items-center gap-3 px-4 py-3 rounded-xl transition-colors relative",
+                  isActive
+                    ? "bg-sage-50 text-sage-700 font-medium"
+                    : "text-sage-500 hover:bg-sage-50 hover:text-sage-600"
+                )}
+              >
+                <span className="relative">
+                  <item.icon size={20} />
+                  {isProfile && hasUpdate && (
+                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-[#c0736a] rounded-full" />
+                  )}
+                </span>
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="p-6 border-t border-sage-100">
@@ -69,21 +83,28 @@ export default function Layout() {
 
       {/* Mobile Bottom Nav */}
       <nav className="md:hidden bg-white border-t border-sage-100 fixed bottom-0 w-full flex justify-around p-3 z-10">
-        {navItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={cn(
-              "flex flex-col items-center gap-1 p-2 rounded-lg",
-              location.pathname.startsWith(item.path)
-                ? "text-sage-700"
-                : "text-sage-400"
-            )}
-          >
-            <item.icon size={20} />
-            <span className="text-[10px]">{item.label}</span>
-          </Link>
-        ))}
+        {navItems.map((item) => {
+          const isProfile = item.path === '/profile';
+          const isActive = location.pathname.startsWith(item.path);
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={cn(
+                "flex flex-col items-center gap-1 p-2 rounded-lg relative",
+                isActive ? "text-sage-700" : "text-sage-400"
+              )}
+            >
+              <span className="relative">
+                <item.icon size={20} />
+                {isProfile && hasUpdate && (
+                  <span className="absolute -top-1 -right-1 w-2 h-2 bg-[#c0736a] rounded-full" />
+                )}
+              </span>
+              <span className="text-[10px]">{item.label}</span>
+            </Link>
+          );
+        })}
       </nav>
     </div>
   );
